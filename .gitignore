@@ -1,0 +1,7 @@
+**/*.dat
+**/*.sbatch
+**/*.out
+**/*.pdf
+**/*.png
+**/*.eps
+**/*.xyz
