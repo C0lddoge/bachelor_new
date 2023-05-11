@@ -46,7 +46,7 @@ def sim_name(N, density,T):
     print(N)
     N_total = sum(N)
     types = len(N)
-    return 'LJ_N{:d}_types_{:d}_dens{:.2e}_T{:.2e}'.format(N_total,types,density, T)
+    return 'LJ_N{:d}_types_{:d}_dens{:.2e}_T{:.2e}_proper'.format(N_total,types,density, T)
 
 def simulate(N, density,T,xyz_switch,e_switch,p_switch):
     if not os.path.isdir('data'):
@@ -67,8 +67,8 @@ def simulate(N, density,T,xyz_switch,e_switch,p_switch):
     eps = np.array([[1,0],[0,0]])
     sig = np.array([[1,0],[0,0]])
     trunc = 2.5
-    mc_moves = 10**6
-    max_displacement = 0.5
+    mc_moves = int(4.5*10**7)
+    max_displacement = 0.25
     energy_steps = 1000
     w_steps = 1000
     p_steps = 1000

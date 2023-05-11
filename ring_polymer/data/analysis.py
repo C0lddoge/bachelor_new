@@ -29,9 +29,8 @@ parser.add_argument(
         )
 parser.add_argument(
         '--S_q',
-        nargs = '+',
         type = int, 
-        default = (999,999)
+        default = 999
         )
 parser.add_argument(
         '--A_k',
@@ -73,7 +72,7 @@ def plot_path(plotname):
 #T = float(directory[29:37])
 print(rho)
 print(T)
-xyz,types = cm.read_xyz(xyz_path,500,2500)
+xyz,types = cm.read_xyz(xyz_path,100,3000)
 switch = 0
 if energy_switch:
 
@@ -102,17 +101,17 @@ if g_r:
         plt.xlabel('r')
         plt.ylabel(f'g_{pairs[i]}(r)')
         plot_name = f'g_{pairs[i]}r'
-        file_name = f'g_r{pairs[i]}.dat'
+        file_name = '{:}_rdf_{:}{:}.dat'.format(directory[:-1],pairs[i][0],pairs[i][1])
         plt.savefig(plot_path(plot_name), format = 'eps')
         plt.clf()
         cm.write_xy(result_path(file_name),(r[i],g[i],error[i]))
-if S_q != (999,999):
-    q,S = cm.structure_fac(xyz,types,S_q[0],S_q[1],rho)
+if S_q != 999:
+    S,q,error= cm.fac_avg(xyz,types,rho,8,S_q)
     plt.plot(q,S)
     plt.ylabel('S(q)')
     plt.xlabel('q')
-    plot_name = f'S{(S_q[0],S_q[1])}_q'
-    file_name = f'S{(S_q[0],S_q[1])}_q.dat'
+    plot_name = f'S{(S_q,S_q)}_q'
+    file_name = f'S{(S_q,S_q)}_q_{rho}.dat'
     plt.savefig(plot_path(plot_name), format = 'eps')
     plt.clf()
     cm.write_xy(result_path(file_name),(q,S))

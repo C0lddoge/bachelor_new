@@ -59,7 +59,7 @@ def A_time(A):
 def bin_ana_input(data):
     # does bin ana to plot different boxlengths to let you select one
     N = len(data)
-    Nb = np.arange(2,500)
+    Nb = np.arange(2,int(len(data)/2))
     plot = []
     for i in Nb:
         plot.append(bin_ana(data,i))
@@ -78,8 +78,6 @@ def bin_ana(data,Nb):
         O = data[:]
     N = len(O)
     k = int(N/Nb) #maybe need to properly do this
-    print(f' k = {k}')
-    print(f' NB = {Nb}')
     O_bn = []
     for i in range(1,Nb+1):
         O_temp = 0
@@ -88,10 +86,12 @@ def bin_ana(data,Nb):
             
         O_bn.append(1/k * O_temp)
     
-    O_b = np.mean(O)
+    O_b = np.mean(O_bn)
+    print(O_b)
+    print(np.mean(O))
     O_bn = np.array(O_bn)
     x = (O_bn-O_b)**2
-    sig2 = 1/(Nb-1) * np.sum(x)
+    sig2 = 1/(Nb*(Nb-1)) * np.sum(x)
 
 
 

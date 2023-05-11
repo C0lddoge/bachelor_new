@@ -148,20 +148,24 @@ def mc_move(xyz,types,trunc,beta,N,L,max_displacement,potential_dict):
         else:
             return 0,xyz
 
-def simulate_num(N,beta,rho,mc_moves,trunc,max_displacement,e_step,w_step,p_step,xyz_switch,e_switch,p_switch,potential_dict,filename = '',energy_file = '',pressure_file = ''):
+def simulate_num(N,beta,rho,mc_moves,trunc,max_displacement,e_step,w_step,p_step,xyz_switch,e_switch,p_switch,potential_dict,initial = 0, f_out = 0,e_out = 0):
     N_total = np.sum(N)
     L = (N_total/rho)**(1/3)
-    xyz,types = intialize(N,L)
+    if initial == 0:
+        xyz,types = intialize(N,L)
+    else:
+        xyz,types = initial
+    print(xyz)
     energy_steps = np.zeros(math.ceil(mc_moves/e_step))
     accept_count = 0
     reject_count = 0
 
-    if xyz_switch:
-        f_out = open(filename,'x')
-    if e_switch:
-        e_out = open(energy_file,'x')
-    if p_switch : 
-        p_out = open(pressure_file,'x')
+#    if xyz_switch:
+#        f_out = open(filename,'x')
+#    if e_switch:
+#        e_out = open(energy_file,'x')
+#    if p_switch : 
+#        p_out = open(pressure_file,'x')
     for i in range(mc_moves):
             print(i)
             yn,xyz = mc_move(xyz,types,trunc,beta,N,L,max_displacement,potential_dict)

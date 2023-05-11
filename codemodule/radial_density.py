@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from .numeric_pot_mc import d_matrix
-#import numba as nb
+import numba as nb
 from .statistics import bin_ana_input, bin_ana
 from scipy import integrate
 def rad_frame(frame,dr,rho):
@@ -29,7 +29,7 @@ def rad_frame(frame,dr,rho):
     
     return r,g
 
-def g_r_error(g_series):
+def g_r_error(g_series,bin_len = 0):
     #returns error array for each bin
     Nframe= len(g_series)
     Nbin = len(g_series[0])
@@ -41,7 +41,10 @@ def g_r_error(g_series):
             series_matrix[i,j] = g_series[i][j]
 
     rand_bin = np.random.randint(0,Nbin-1)
-    Nb = bin_ana_input(series_matrix[:,rand_bin])
+    if bin_len == 0:
+        Nb = bin_ana_input(series_matrix[:,rand_bin])
+    else:
+        Nb = bin_len
     error = []
     for i in range(Nbin):
         error.append(np.sqrt(bin_ana(series_matrix[:,i],Nb)))
@@ -70,20 +73,8 @@ def combinations(array):
             combinations.append([array[i],array[j]])
 
     return combinations 
-        
-
-def radial_frames_types(frames,pairs,counts,types,dr,rho):
-    frames = frames.T
-    N_total = np.shape(frames)[1]
-    L = (N_total/rho)**(1/3)
-    bins = int(L/(2*dr))
-    d_arr = np.sqrt(d_matrix(frames,L))
-    N_pair = len(pairs)
-    pair_counts = []
-    for i in range(N_pair):
-        pair_counts.append(counts[pairs[i][0]]*counts[pairs[i][1]])
-
-
+           
+def d_loop(N_pair,N_total,types,pairs,d_arr):
     d_types = []
     for i in range(N_pair):
         arr = []
@@ -93,7 +84,27 @@ def radial_frames_types(frames,pairs,counts,types,dr,rho):
                 if part_types == pairs[i] and j != k :
                     arr.append(d_arr[j,k])
         d_types.append(arr)
-    
+    return d_types
+
+
+
+def radial_frames_types(frames,pairs,counts,types,dr,rho):
+    frames = frames.T
+    N_total = np.shape(frames)[1]
+    L = (N_total/rho)**(1/3)
+    bins = int(L/(2*dr))
+    d_arr = np.sqrt(d_matrix(frames,L))
+    N_pair = len(pairs)
+    pair_counts = []
+    if N_pair == 1:
+        pair_counts.append(counts[0]**2)
+    else:
+        for i in range(N_pair):
+            pair_counts.append(counts[pairs[i][0]]*counts[pairs[i][1]])
+
+
+
+    d_types = d_loop(N_pair,N_total,types,pairs,d_arr)
     g_pair = [] 
     r_pair = []
 
@@ -109,8 +120,7 @@ def radial_frames_types(frames,pairs,counts,types,dr,rho):
 
     return r_pair,g_pair
 
-
-def rad_dist_types(frames,types,dr,rho):
+def rad_dist_types(frames,types,dr,rho,bin_len = 0):
     g_pair_frame = []
     unique, counts = np.unique(types, return_counts = True)
     pairs = combinations(unique)
@@ -129,7 +139,7 @@ def rad_dist_types(frames,types,dr,rho):
             helper.append(g_pair_frame[k][j])
             
 
-        error.append(g_r_error(helper))
+        error.append(g_r_error(helper,bin_len))
 
         g_pair_avg.append(np.mean(helper,axis=0))
     

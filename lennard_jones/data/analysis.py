@@ -28,6 +28,21 @@ parser.add_argument(
         default = False
         )
 
+parser.add_argument(
+        '--rho',
+        type = float,
+        required = True
+        )
+parser.add_argument(
+        '--T',
+        type = float,
+        required = True
+        )
+
+N = 216
+rho = vars(parser.parse_args())["rho"]
+T = vars(parser.parse_args())["T"]
+
 directory = vars(parser.parse_args())["directory"]
 energy_pressure = vars(parser.parse_args())['energy_pressure']
 g_r = vars(parser.parse_args())['g_r']
@@ -42,18 +57,12 @@ def result_path(resultname):
 def plot_path(plotname):
 
     return directory + '/plots/' + plotname +'.eps'
-
-N =int(directory[4:7]) 
-rho = float(directory[20:28])
-T = float(directory[30:37])
-print(N)
-print(rho)
-print(T)
-xyz,types = cm.read_xyz(xyz_path,500,1500)
+xyz,types = cm.read_xyz(xyz_path,1000,44900)
+print(xyz[-1])
 if energy_pressure == False:
 
     data = cm.read_txt(ener_path,';')
-    data = cm.equilibrate(data,0.2)
+    data = cm.equilibrate(data,0.022)
     plt.plot(cm.equil_check(data,30))
     plt.show()
     name_tag = '_ener'
@@ -64,7 +73,7 @@ if energy_pressure == False:
 if energy_pressure:
 
     data = cm.read_txt(p_path,';')
-    data = cm.equilibrate(data,0.3)
+    data = cm.equilibrate(data,0.022)
     plt.plot(cm.equil_check(data,30))
     plt.show()
     name_tag = '_pressure'
@@ -78,10 +87,10 @@ if g_r:
         plt.xlabel('r')
         plt.ylabel(f'g_{pairs[i]}(r)')
         plot_name = f'g_{pairs[i]}r'
-        file_name = f'g_r{pairs[i]}.dat'
+        file_name = '{:}_rdf_{:}{:}.dat'.format(directory[:-1],pairs[i][0],pairs[i][1])
         plt.savefig(plot_path(plot_name), format = 'eps')
         plt.clf()
-        np.savetxt(result_path(file_name),(r[i],g[i],error[i]),fmt = '%.6e', delimiter = ';')
+        cm.write_xy(result_path(file_name),(r[i],g[i],error[i]))
 
 if switch == 1:
     if A_k:
@@ -109,12 +118,14 @@ if switch == 1:
        N_eff = len(data[:,1])/(2*tau_final)
        error = np.sqrt(np.var(data[:,1])/N_eff)
     if not A_k:
-        Nb = np.arange(2,500)
+        Nb = np.arange(2,100)
         plot = []
+        k = []
+        N = len(data[:,1])
         for i in Nb:
-            plot.append(cm.bin_ana(data,i))
-        k = len(data)//Nb
-        plt.plot(Nb,np.array(plot), '.',  markersize = 3.0)
+            plot.append(N/i*cm.bin_ana(data,i))
+            k.append(N/i)
+        plt.plot(k,np.array(plot),'.',markersize = 3.0)
         plt.show()
         input_nb = int(input())
         error = np.sqrt(cm.bin_ana(data,input_nb))
