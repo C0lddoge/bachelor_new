@@ -11,3 +11,4 @@ from .diffusion import *
 from .read_traj import read_lammpstrj
 from .infile import *
 from .diffusion import diff_coeff
+from .van_hove import van_hoft

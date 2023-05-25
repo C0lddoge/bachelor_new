@@ -38,9 +38,9 @@ counter = 0
 for ind,t in enumerate(Ts):
     for rho in rhos:
         data = np.loadtxt(data_dir + name_me(rho,t),delimiter=';')
-        plt.errorbar(data[:,0],data[:,1], yerr = data[:,2], marker = 'x', markersize = 2.0, linewidth = 0.0, elinewidth = 1.0,color = colors[counter])
+        plt.errorbar(data[:,0],data[:,1], yerr = data[:,2], marker = 'x', markersize = 3.0, linewidth = 0.0, elinewidth = 1.0,color = colors[counter])
         data = np.loadtxt(data_dir + name_ro(rho,t))
-        plt.plot(data[:,0],data[:,1],linewidth = 1.0, color = colors[counter],label = labels[counter])
+        plt.plot(data[:,0],data[:,1],alpha = 0.7,linewidth = 1.0, color = colors[counter],label = labels[counter])
         counter += 1
 #    axs[ind].set_xlabel('$r[\\sigma]$')
  #   axs[ind].set_ylabel('$g(r)$')

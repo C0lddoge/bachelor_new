@@ -27,7 +27,7 @@ def return_name(N1 = '256', N2 = '256', M1 = '50', M2 = '50', Bend1 = '00.0', Be
   return 'MIXTURE_N1-{:}_N2-{:}_MPR1-{:}_MPR2-{:}_Bend1-{:}_Bend2-{:}_L-{:}'.format(N1, N2, M1, M2, Bend1, Bend2, L)
 
 def return_name_me(N1 = '256', N2 = '256', dens = '0.025',types=[0,0]):
-    return 'RP_N{:},{:}_T1.0_rho{:}_rdf_{:}{:}.dat'.format(N1,N2,dens,*types)
+    return 'RP_N{:},{:}_T1.0_rho{:}_rdf_{:}{:}_mc.dat'.format(N1,N2,dens,*types)
 
 
 # constants, concentrations etc
@@ -87,7 +87,7 @@ for nind,N in enumerate(Ns):
       print(return_name_me(N[0],N[1],dens[c],comb))
       if os.path.exists(data_dir + return_name_me(N[0],N[1],dens[nind],comb)):
         data = np.loadtxt(data_dir + return_name_me(N[0],N[1],dens[nind],comb),delimiter =';')
-        ax[x][y].plot(data[:,0], data[:,1],label = 'CG; {:}{:}'.format(comb[0]+1,comb[1]+1),linewidth = 1.0, color = colors['{:}{:}'.format(*comb)])
+        ax[x][y].plot(data[:,0], data[:,1],label = '$CG; \ {:}{:}$'.format(comb[0]+1,comb[1]+1),linewidth = 1.0, color = colors['{:}{:}'.format(*comb)])
         ax[x][y].fill_between(data[:,0],data[:,1]-data[:,2],data[:,1]+data[:,2],color = colors['{:}{:}'.format(*comb)],alpha = 0.5)
   ax[x][y].text(1,1.5, names[nind], fontsize = 35, bbox = dict(facecolor = 'grey', alpha = 0.5))
   ax[x][y].set_title('$\\rho_1/\\rho_1^* = {:.2f}; \\rho_2/\\rho_2^* = {:.2f}; N_1 = {:}; N_2 = {:};$'.format(r0,r1,int(N[0]),int(N[1])))
@@ -136,7 +136,7 @@ for nind,N in enumerate(Ns2):
       print(data_dir + return_name(N[0],N[1])+ '-rdf_{:}{:}.dat'.format(comb[0],comb[1]))
       if os.path.exists(data_dir + return_name(N[0],N[1]) + '-rdf_{:}{:}.dat'.format(comb[0],comb[1])):
         data = np.loadtxt(data_dir + return_name(N[0],N[1])+ '-rdf_{:}{:}.dat'.format(comb[0],comb[1]))
-        ax[x][y].errorbar(data[:,0]/unit_length, data[:,1],yerr = data[:,2],marker = 'x',linewidth = 0.0,elinewidth = 1.0, label = 'MR; {:}{:}'.format(*comb),markersize= 2.0, color = colors2['{:}{:}'.format(*comb)])
+        ax[x][y].errorbar(data[:,0]/unit_length, data[:,1],yerr = data[:,2],marker = 'x',linewidth = 0.0,elinewidth = 1.0, label = '$MR; \ {:}{:}$'.format(*comb),markersize= 2.0, color = colors2['{:}{:}'.format(*comb)])
 
   #ax[nind].set_title('$\\rho_0^* = {:.4f}; \\rho_1^* = {:.4f}; N_0 = {:}; N_1 = {:};$'.format(r0,r1,int(N[0]),int(N[1])))
   ax[x][y].set_xlim(-0.1,7.1)

@@ -26,7 +26,7 @@ E_lit = data_lit[:,2]
 err_lit = data_lit[:,3]
 
 
-plt.plot(np.linspace(-2.5,0.2),np.linspace(-2.5,0.2), '--',color = 'black',linewidth = 1.5, label = "control line")
+plt.plot(np.linspace(-2.5,0.2),np.linspace(-2.5,0.2), '--',color = 'black',linewidth = 1.5)
 
 colors = ['indianred','gold','darkgreen','slateblue']
 labels = ['$T^* = 1.4$ ; $ \\rho = 0.4 \ \\sigma^{-3}$', '$T^* = 1.8$ ; $ \\rho = 0.4 \ \\sigma^{-3}$','$T^* = 1.4$ ; $ \\rho = 0.7 \ \\sigma^{-3}$','$T^* = 1.8$ ; $ \\rho = 0.7 \ \\sigma^{-3}$']

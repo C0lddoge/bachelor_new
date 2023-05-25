@@ -79,6 +79,8 @@ def bin_ana(data,Nb):
     N = len(O)
     k = int(N/Nb) #maybe need to properly do this
     O_bn = []
+    if len(data)<=Nb:
+        return 69**2
     for i in range(1,Nb+1):
         O_temp = 0
         for j in range(k):
@@ -87,8 +89,8 @@ def bin_ana(data,Nb):
         O_bn.append(1/k * O_temp)
     
     O_b = np.mean(O_bn)
-    print(O_b)
-    print(np.mean(O))
+    #print(O_b)
+    #print(np.mean(O))
     O_bn = np.array(O_bn)
     x = (O_bn-O_b)**2
     sig2 = 1/(Nb*(Nb-1)) * np.sum(x)

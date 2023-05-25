@@ -19,7 +19,7 @@ plt.rcParams.update({
 data = np.loadtxt('ener.dat',delimiter = ';')
 data = cm.equilibrate(data,0.022)
 print(len(data))
-ks = np.arange(2,100)
+ks = np.arange(2,400)
 plot = []
 N = len(data[:,1])
 for i in ks:
