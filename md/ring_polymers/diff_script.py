@@ -49,11 +49,14 @@ if all(time_range) == 0.0:
     time_range = [data[0,0],data[-1,0]]
     diff_data = cm.diff_coeff(data,time_range)
     save_data = np.array([args.L,diff_data['D'],diff_data['D_err']])
-    print(save_data)
+    print(f'L = {args.L}')
+    print(f'alpha = {diff_data["alpha"]} ; D = {diff_data["D"]}')
+    #print(save_data)
     np.savetxt(f,save_data.reshape(1,save_data.shape[0]), fmt = "%.5f")
 else:
     diff_data = cm.diff_coeff(data,time_range)
-    save_data = [args.L,diff_data['D'],diff_data['D_err']]
+    save_data = np.array([args.L,diff_data['D'],diff_data['D_err']])
+    print(f'alpha = {diff_data["alpha"]} ; D = {diff_data["D"]}')
     np.savetxt(f,save_data.reshape(1,save_data.shape[0]), fmt = "%.5f")
 
 

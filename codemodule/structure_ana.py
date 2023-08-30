@@ -16,6 +16,9 @@ def make_graph(d_arr,r_c):
 
 def make_graph_2(d_arr,r_c):
     inc_arr = d_arr<r_c
+    inc_arr = inc_arr.astype(int)
+    np.fill_diagonal(inc_arr,0)
+    print(inc_arr)
     rows,cols = np.where(inc_arr == 1)
     edges = zip(rows.tolist(),cols.tolist())
     gr = nx.Graph()

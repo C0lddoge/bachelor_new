@@ -1,6 +1,4 @@
 LAMMPS (8 Feb 2023)
-OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
-  using 1 OpenMP thread(s) per MPI task
 units lj
 dimension 3
 atom_style atomic
@@ -44,20 +42,20 @@ Per MPI rank memory allocation (min/avg/max) = 4.385 | 4.385 | 4.385 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
          0   0             -0.58147172     0             -0.58147172    -0.014768592  
   10000000   0.95484821    -0.059530723    0              1.3661107      0.013183762  
-Loop time of 161.68 on 1 procs for 10000000 steps with 216 atoms
+Loop time of 159.227 on 1 procs for 10000000 steps with 216 atoms
 
-Performance: 26719374.335 tau/day, 61850.404 timesteps/s, 13.360 Matom-step/s
-99.9% CPU use with 1 MPI tasks x 1 OpenMP threads
+Performance: 27131000.276 tau/day, 62803.241 timesteps/s, 13.566 Matom-step/s
+99.9% CPU use with 1 MPI tasks x no OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 12.091     | 12.091     | 12.091     |   0.0 |  7.48
-Neigh   | 38.152     | 38.152     | 38.152     |   0.0 | 23.60
-Comm    | 9.4652     | 9.4652     | 9.4652     |   0.0 |  5.85
-Output  | 1.5147     | 1.5147     | 1.5147     |   0.0 |  0.94
-Modify  | 95.089     | 95.089     | 95.089     |   0.0 | 58.81
-Other   |            | 5.369      |            |       |  3.32
+Pair    | 12.332     | 12.332     | 12.332     |   0.0 |  7.74
+Neigh   | 37.383     | 37.383     | 37.383     |   0.0 | 23.48
+Comm    | 8.8098     | 8.8098     | 8.8098     |   0.0 |  5.53
+Output  | 1.4971     | 1.4971     | 1.4971     |   0.0 |  0.94
+Modify  | 93.59      | 93.59      | 93.59      |   0.0 | 58.78
+Other   |            | 5.616      |            |       |  3.53
 
 Nlocal:            216 ave         216 max         216 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -70,4 +68,4 @@ Total # of neighbors = 156
 Ave neighs/atom = 0.72222222
 Neighbor list builds = 1169877
 Dangerous builds = 0
-Total wall time: 0:02:41
+Total wall time: 0:02:39

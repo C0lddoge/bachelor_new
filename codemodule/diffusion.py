@@ -13,9 +13,9 @@ def diff_coeff(msd_data,time_range):
     log_time = np.log(msd_data[:,0])
     popt,pcov = curve_fit(f_lin,log_time,log_msd)
     print(pcov)
-    D_coeff = np.exp(popt[1])
+    D_coeff = np.exp(popt[1])/6
     D_err = (np.sqrt(np.diag(pcov))[1])
-    D_err = D_coeff*D_err
+    D_err = D_coeff*D_err/6
     alpha_err = np.sqrt(np.diag(pcov)[0])
    # plt.plot(log_time,log_msd,label = 'data')
    # plt.plot(log_time,f_lin(log_time,*popt), label = 'fit')

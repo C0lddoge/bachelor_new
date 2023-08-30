@@ -84,7 +84,8 @@ unique,counts = np.unique(names,return_counts = True)
 count_dict = dict(zip(unique,counts))
 Npart_type = count_dict[int(types)]
 MSDs = np.zeros((len(lag_times),Npart_type+2)) # init for the final output
-
+if frame_gap==0:
+    frame_gap = 1.0
 # print data
 print('\n ! MAKE SURE YOU HAVE UNFOLDED COORDINATES WITH UNIFORM TIMESTEP !\n')
 print(' {:} particles'.format(Npart))

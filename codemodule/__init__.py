@@ -12,3 +12,6 @@ from .read_traj import read_lammpstrj
 from .infile import *
 from .diffusion import diff_coeff
 from .van_hove import van_hoft
+from .fit_van import gauss_fit
+from .graph_dynamics import dyn_graph,dyn_corr,abs_diff,clust_time,mul_diff,dyn_onerow,centrality,dyn_graph_ser,mean_centrality,part_clustser,node_degree_dist,part_nodedeg
+from .same_ratio import same_ratio

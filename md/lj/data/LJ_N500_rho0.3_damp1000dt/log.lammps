@@ -1,0 +1,70 @@
+LAMMPS (8 Feb 2023)
+units lj
+dimension 3
+atom_style atomic
+boundary p p p
+
+read_data indata.in
+Reading data file ...
+  orthogonal box = (0 0 0) to (11.856311 11.856311 11.856311)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  500 atoms
+  read_data CPU = 0.001 seconds
+
+pair_style lj/cut 2.5
+pair_coeff 1 1 1.7 1.0
+
+fix mynve all nve
+fix mylgv all langevin 2.49 2.49 ${damp} 12345
+fix mylgv all langevin 2.49 2.49 5.0 12345
+
+dump myltr all custom 1000 ./dump10mio.lammpstrj id type xs ys zs ix iy iz
+dump_modify myltr sort id format line "%d %d %.5f %.5f %.5f %d %d %d"
+
+timestep 0.005
+run 2000000
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 2.8
+  ghost atom cutoff = 2.8
+  binsize = 1.4, bins = 9 9 9
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 4.413 | 4.413 | 4.413 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -2.1845655      0             -2.1845655     -1.1999215    
+   2000000   2.5797926     -3.1795769      0              0.68237263     0.44929398   
+Loop time of 271.257 on 1 procs for 2000000 steps with 500 atoms
+
+Performance: 3185174.516 tau/day, 7373.089 timesteps/s, 3.687 Matom-step/s
+100.0% CPU use with 1 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 104.73     | 104.73     | 104.73     |   0.0 | 38.61
+Neigh   | 109.29     | 109.29     | 109.29     |   0.0 | 40.29
+Comm    | 11.463     | 11.463     | 11.463     |   0.0 |  4.23
+Output  | 0.66036    | 0.66036    | 0.66036    |   0.0 |  0.24
+Modify  | 42.295     | 42.295     | 42.295     |   0.0 | 15.59
+Other   |            | 2.82       |            |       |  1.04
+
+Nlocal:            500 ave         500 max         500 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1082 ave        1082 max        1082 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           6786 ave        6786 max        6786 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 6786
+Ave neighs/atom = 13.572
+Neighbor list builds = 379659
+Dangerous builds = 0
+Total wall time: 0:04:31
