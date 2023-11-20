@@ -25,7 +25,7 @@ plt.rcParams.update({
 
 
 def name_gen(N,L,rc):
-    return 'RP_N{:},{:}_L{:}_clust_rc{:}_CG.dat'.format(N[0],N[1],L,rc)
+    return 'RP_N{:},{:}_L{:}_newpot_clust_rc{:}_CG.dat'.format(N[0],N[1],L,rc)
 
 def name_gen_mr(N,L,rc):
     return 'RP_N{:},{:}_L{:}_clust_rc{:}_MR.dat'.format(N[0],N[1],L,rc)
@@ -49,7 +49,7 @@ def return_concentration(N, L = '097.21'):
 
 
 
-data_dir = 'cluster_data/'
+data_dir = 'cluster_data_newpot/'
 export_dir = 'export_rp/'
 Ns = [[256,256]]
 Ls = [108.6,97.21,80.0,63.5,55.47,50.4,46.78,44.03]
@@ -70,7 +70,7 @@ for nind,N in enumerate(Ns):
             #r0 = return_concentration(N[0])/return_overlap(50,Rgs["50"]["00.0"])
             #r1 = return_concentration(N[1])/return_overlap(50,Rgs["50"]["30.0"])
                 data = np.loadtxt(data_dir + name_gen(N,L,rc))
-                data_mr = np.loadtxt(data_dir + name_gen_mr(N,Ls2[lind],rc))
+                #data_mr = np.loadtxt(data_dir + name_gen_mr(N,Ls2[lind],rc))
                 #x,y = np.unravel_index(nind,(2,2))
             #if ty == 'all':
              #   axs[x][y].bar(data[:,0]-widths/2,data[:,1],capsize = 1.5,width = widths, label = 'total cluster distribution')
@@ -80,7 +80,7 @@ for nind,N in enumerate(Ns):
              #   axs[x][y].bar(data[:,0]+widths/2,data[:,1],capsize = 1.5,width = widths, label = 'semiflexible cluster distribution')
               #  axs[x][y].errorbar(data[:,0]+widths/2,data[:,1], yerr = data[:,2],linewidth = 0.0, elinewidth = 1.0, capsize = 0.0, color = 'black')
                 axs[x][y].plot(data[:,0],data[:,2],label='CG')
-                axs[x][y].plot(data_mr[:,0],data_mr[:,2],label='MR')
+                #axs[x][y].plot(data_mr[:,0],data_mr[:,2],label='MR')
                 #axs[x][y].set_xlim(0,xlim[lind])
                 axs[x][y].set_xscale('log')
             #axs[nind].set_yscale('log')
@@ -98,7 +98,7 @@ for nind,N in enumerate(Ns):
 #            axs[lind][rcind].set_ylim(10**(-5),1.1*10**0)
             axs[x][y].legend()
         fig.suptitle('$L = {:} \ \\sigma$ ; $\\rho = {:1.5f} \ \\sigma^{{-3}}$'.format(L,(N[0]+N[1])/L**3))
-        fig.savefig(f'export_cluster/mu_L{L}.pdf')
+        fig.savefig(f'export_cluster_newpot/mu_L{L}.pdf')
         fig.clf()
  
 

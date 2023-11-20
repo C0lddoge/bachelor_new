@@ -25,7 +25,7 @@ plt.rcParams.update({
 
 
 def name_gen(N,L,rc):
-    return 'RP_N{:},{:}_L{:}_clust_rc{:}_CG.dat'.format(N[0],N[1],L,rc)
+    return 'RP_N{:},{:}_L{:}_M100,25_k.0_30_clust_rc{:}_CG.dat'.format(N[0],N[1],L,rc)
 
 def name_gen_mr(N,L,rc):
     return 'RP_N{:},{:}_L{:}_clust_rc{:}_MR.dat'.format(N[0],N[1],L,rc)
@@ -48,13 +48,13 @@ def return_concentration(N, L = '097.21'):
 
 
 
-data_dir = 'cluster_data/'
-export_dir = 'export_rp/'
-Ns = [[256,256]]
-Ls = [108.6,97.21,80.0,63.5,55.47,50.4,46.78,44.03]
-Ls2 = ['108.60','097.21','080.00','063.50','055.47','050.40','046.78','044.03']
+data_dir = 'cluster_data_newpot/'
+export_dir = 'export_rp_newpot/'
+Ns = [[500,500],[666,666],[864,864]]
+Ls = [99.99,58.48,41.98,41.61]
+#Ls2 = ['108.60','097.21','080.00','063.50','055.47','050.40','046.78','044.03']
 #xlim = [10,10,10,512,512,512,512,512]
-rcs = [4.0,4.5,5.0,5.5,6.0,6.5,7.0]
+rcs = [4.5]
 widths = 0.3
 fig,axs = plt.subplots(len(Ls),len(rcs), figsize = (500,250),squeeze = False)
 #axs[1][1].set_visible(False)
@@ -69,7 +69,7 @@ for nind,N in enumerate(Ns):
             #r0 = return_concentration(N[0])/return_overlap(50,Rgs["50"]["00.0"])
             #r1 = return_concentration(N[1])/return_overlap(50,Rgs["50"]["30.0"])
                 data = np.loadtxt(data_dir + name_gen(N,L,rc))
-                data_mr = np.loadtxt(data_dir + name_gen_mr(N,Ls2[lind],rc))
+#                data_mr = np.loadtxt(data_dir + name_gen_mr(N,Ls2[lind],rc))
 
                 #x,y = np.unravel_index(nind,(2,2))
             #if ty == 'all':
@@ -80,7 +80,7 @@ for nind,N in enumerate(Ns):
              #   axs[x][y].bar(data[:,0]+widths/2,data[:,1],capsize = 1.5,width = widths, label = 'semiflexible cluster distribution')
               #  axs[x][y].errorbar(data[:,0]+widths/2,data[:,1], yerr = data[:,2],linewidth = 0.0, elinewidth = 1.0, capsize = 0.0, color = 'black')
                 axs[x][y].plot(data[:,0],data[:,1],label = 'CG')
-                axs[x][y].plot(data_mr[:,0],data_mr[:,1], label = 'MR')
+ #               axs[x][y].plot(data_mr[:,0],data_mr[:,1], label = 'MR')
                 #axs[x][y].set_xlim(0,xlim[lind])
                 axs[x][y].set_xscale('log')
                 #axs[x][y].set_yscale('log')
@@ -100,7 +100,7 @@ for nind,N in enumerate(Ns):
  #           axs[lind][rcind].legend(fontsize = 15)
 #            axs[lind][rcind].set_ylim(10**(-5),1.1*10**0)
         fig.suptitle('$L = {:} \ \\sigma$ ; $\\rho = {:1.5f} \ \\sigma^{{-3}}$'.format(L,(N[0]+N[1])/L**3))
-        fig.savefig(f'export_cluster/ratio_L{L}.pdf')
+        fig.savefig(f'export_cluster_M100,25_k0,30/ratio_L{L}.pdf')
         fig.clf()
  
 

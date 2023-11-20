@@ -19,7 +19,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-dir_name = 'RP_N{:},{:}_rho{:}'.format(*args.N,args.density)
+dir_name = './testing_parallel/RP_N{:},{:}_rho{:}'.format(*args.N,args.density)
 if not os.path.isdir(dir_name):
     os.mkdir(dir_name)
 

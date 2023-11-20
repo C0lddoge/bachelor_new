@@ -24,7 +24,7 @@ for ddir in [data_dir, expo_dir]:
     os.mkdir(ddir)
 
 def return_name(N,L,types):
-    return 'RP_N{:},{:}_L{:}_newdamp_MSDs_{:}_err.dat'.format(N[0],N[1],L,types)
+    return 'RP_N{:},{:}_L{:}_newpot_MSDs_{:}_err.dat'.format(N[0],N[1],L,types)
 def return_name_nvt(N,L,types):
     return 'RP_N{:},{:}_L{:}_NVT_MSDs_{:}_err.dat'.format(N[0],N[1],L,types)
 def return_name_mr(N,L,types):

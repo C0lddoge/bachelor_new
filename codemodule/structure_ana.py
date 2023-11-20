@@ -71,7 +71,7 @@ def mu_ana(frames,types,L,r_c,type_count = 2,flag = "all",error_len = 0):
     Nb = error_len
     mu_arr = np.zeros(N_total)
     error_arr = np.zeros(N_total)
-    clust_sizes = np.arange(1,513)
+    clust_sizes = np.arange(1,N_total+1)
     for n in range(N_total):
         if len(mu_dict[n+1])>0:
             mu_arr[n] = np.mean(mu_dict[n+1])

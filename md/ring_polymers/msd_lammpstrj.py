@@ -69,7 +69,7 @@ parser.add_argument(
         type = str
         )
 args = parser.parse_args()
-wish_name = args.file.split('/')[1]
+wish_name = args.file.split('/')[2]
 frames = cm.read_lammpstrj(args.file,args.cutoff,args.stride)
 frame_gap = frames[1]['timestep']-frames[0]['timestep']
 ##### the actual program

@@ -28,7 +28,7 @@ parser.add_argument(
         )
  
 filename = vars(parser.parse_args())['file']
-wish_name = filename.split('/')[1]
+wish_name = filename.split('/')[2]
 print(wish_name)
 args = parser.parse_args()
 data = cm.read_lammpstrj(filename,args.cutoff)
@@ -42,13 +42,13 @@ types = list(np.array(types)-1)
 print(types)
 pairs,r,g,error = cm.rad_dist_types(xyz,types,0.1,rho,args.bin_len)
 for i in range(len(pairs)):
-    plt.plot(r[i],g[i])
-    plt.xlabel('r')
-    plt.ylabel(f'g_{pairs[i][0]}{pairs[i][1]}(r)')
-    plot_name = args.save_dir + f'g_{pairs[i][0]}{pairs[i][1]}r.pdf'
+   # plt.plot(r[i],g[i])
+   # plt.xlabel('r')
+   # plt.ylabel(f'g_{pairs[i][0]}{pairs[i][1]}(r)')
+  #  plot_name = args.save_dir + f'g_{pairs[i][0]}{pairs[i][1]}r.pdf'
     file_name = args.save_dir + '{:}_rdf_{:}{:}.dat'.format(wish_name,pairs[i][0],pairs[i][1])
-    plt.savefig(plot_name)
-    plt.clf()
+#    plt.savefig(plot_name)
+ #   plt.clf()
     cm.write_xy(file_name,(r[i],g[i],error[i]))
 
 
