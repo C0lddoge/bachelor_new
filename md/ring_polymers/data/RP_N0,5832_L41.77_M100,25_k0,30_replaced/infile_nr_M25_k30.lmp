@@ -1,0 +1,23 @@
+units lj
+dimension 3
+atom_style atomic
+boundary p p p
+
+read_data indata.in
+
+pair_style ring/cg 20.0 
+pair_coeff 1 1 2.65724733 0.96180336 1.63649287 2.28247361 2.29616516 2.88817213
+
+neigh_modify one 5000
+
+fix mynve all nve
+fix mylgv all langevin 1.0 1.0 100 12345
+
+dump myltr all custom 1000 dump_laptop.lammpstrj id type xs ys zs ix iy iz
+dump_modify myltr sort id format line "%d %d %.5f %.5f %.5f %d %d %d"
+
+
+write_restart restart.re
+
+timestep 0.01
+run 10000

@@ -1,0 +1,177 @@
+LAMMPS (8 Feb 2023)
+units lj
+dimension 3
+atom_style atomic
+boundary p p p
+
+read_data indata.in
+Reading data file ...
+  orthogonal box = (0 0 0) to (11.262479 11.262479 11.262479)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  500 atoms
+  read_data CPU = 0.002 seconds
+
+pair_style star/cg 2.5
+pair_coeff 1 1 166.0 1.0
+pair_write 1 1 500 r 0.01 2.0 table.txt star
+Appending to table file table.txt with DATE: 2023-10-14
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 2.8
+  ghost atom cutoff = 2.8
+  binsize = 1.4, bins = 9 9 9
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair star/cg, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+
+
+fix mynvt all nvt temp 1.0 1.0 50.0
+
+
+compute en all pe
+#fix myen all print 1000 "$en" file energy.txt
+thermo_style custom step pe
+thermo 10000
+
+
+dump myltr all custom 1000 dump.lammpstrj id type xs ys zs ix iy iz
+dump_modify myltr sort id format line "%d %d %.5f %.5f %.5f %d %d %d"
+timestep 0.01
+run 1000000
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Per MPI rank memory allocation (min/avg/max) = 4.413 | 4.413 | 4.413 Mbytes
+   Step         PotEng    
+         0   12.534468    
+     10000   9.6310577    
+     20000   9.1168826    
+     30000   8.403251     
+     40000   8.3003272    
+     50000   8.3537098    
+     60000   8.4283241    
+     70000   8.3478349    
+     80000   8.4028922    
+     90000   8.455809     
+    100000   8.298038     
+    110000   8.361941     
+    120000   8.4368981    
+    130000   8.325039     
+    140000   8.3149294    
+    150000   8.3901823    
+    160000   8.3313029    
+    170000   8.3380178    
+    180000   8.4418489    
+    190000   8.3856199    
+    200000   8.3348702    
+    210000   8.4380086    
+    220000   8.4087222    
+    230000   8.3129447    
+    240000   8.3570464    
+    250000   8.3057986    
+    260000   8.3791835    
+    270000   8.4356608    
+    280000   8.3932173    
+    290000   8.3507749    
+    300000   8.4425856    
+    310000   8.2972302    
+    320000   8.3194483    
+    330000   8.350379     
+    340000   8.4556354    
+    350000   8.3509361    
+    360000   8.4363123    
+    370000   8.3188586    
+    380000   8.3305651    
+    390000   8.3940826    
+    400000   8.371573     
+    410000   8.3629489    
+    420000   8.3366075    
+    430000   8.4313792    
+    440000   8.2640159    
+    450000   8.3995718    
+    460000   8.4521938    
+    470000   8.3158541    
+    480000   8.3907112    
+    490000   8.3490118    
+    500000   8.3916809    
+    510000   8.4581424    
+    520000   8.3575673    
+    530000   8.3323857    
+    540000   8.4364979    
+    550000   8.3466652    
+    560000   8.3804631    
+    570000   8.4338317    
+    580000   8.3595092    
+    590000   8.3847762    
+    600000   8.4699167    
+    610000   8.340299     
+    620000   8.3350265    
+    630000   8.4091936    
+    640000   8.2669452    
+    650000   8.3365226    
+    660000   8.4979099    
+    670000   8.3069193    
+    680000   8.368451     
+    690000   8.3827546    
+    700000   8.2715735    
+    710000   8.3294285    
+    720000   8.3739403    
+    730000   8.2479383    
+    740000   8.3743514    
+    750000   8.3970721    
+    760000   8.3292598    
+    770000   8.3337341    
+    780000   8.4176476    
+    790000   8.3941763    
+    800000   8.2821513    
+    810000   8.3830576    
+    820000   8.3613516    
+    830000   8.2081579    
+    840000   8.4166271    
+    850000   8.307262     
+    860000   8.4024782    
+    870000   8.4185512    
+    880000   8.2708928    
+    890000   8.2891433    
+    900000   8.3367813    
+    910000   8.3652249    
+    920000   8.2672901    
+    930000   8.3191386    
+    940000   8.3694786    
+    950000   8.3225302    
+    960000   8.2761122    
+    970000   8.3172778    
+    980000   8.3142246    
+    990000   8.2188776    
+   1000000   8.2880434    
+Loop time of 225.711 on 1 procs for 1000000 steps with 500 atoms
+
+Performance: 3827904.820 tau/day, 4430.445 timesteps/s, 2.215 Matom-step/s
+100.0% CPU use with 1 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 158.72     | 158.72     | 158.72     |   0.0 | 70.32
+Neigh   | 54.384     | 54.384     | 54.384     |   0.0 | 24.09
+Comm    | 5.751      | 5.751      | 5.751      |   0.0 |  2.55
+Output  | 0.34442    | 0.34442    | 0.34442    |   0.0 |  0.15
+Modify  | 5.0387     | 5.0387     | 5.0387     |   0.0 |  2.23
+Other   |            | 1.476      |            |       |  0.65
+
+Nlocal:            500 ave         500 max         500 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           1203 ave        1203 max        1203 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           7484 ave        7484 max        7484 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 7484
+Ave neighs/atom = 14.968
+Neighbor list builds = 233930
+Dangerous builds = 0
+Total wall time: 0:03:45

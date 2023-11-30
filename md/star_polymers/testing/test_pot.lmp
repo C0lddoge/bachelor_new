@@ -1,0 +1,25 @@
+units lj
+dimension 3
+atom_style atomic
+boundary p p p
+
+read_data indata.in
+
+pair_style star/cg 2.5
+pair_coeff 1 1 166.0 1.0 
+pair_write 1 1 500 r 0.01 2.0 table.txt star 
+
+
+fix mynvt all nvt temp 1.0 1.0 50.0
+
+
+compute en all pe 
+#fix myen all print 1000 "$en" file energy.txt 
+thermo_style custom step pe
+thermo 10000
+
+
+dump myltr all custom 1000 dump.lammpstrj id type xs ys zs ix iy iz
+dump_modify myltr sort id format line "%d %d %.5f %.5f %.5f %d %d %d"
+timestep 0.01
+run 1000000
